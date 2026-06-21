@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>シンプル4択クイズ</title>
+    <title>ワンナイト人狼GMクイズ</title>
     <!-- 見た目を簡単に整えるためにTailwind CSSを読み込みます -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -26,7 +26,7 @@
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-blue-600">クイズ</h1>
                 <span id="question-counter" class="text-sm font-semibold bg-blue-100 text-blue-800 py-1 px-3 rounded-full">
-                    第 1 問 / 全 3 問
+                    第 1 問 / 全 10 問
                 </span>
             </div>
 
@@ -71,8 +71,8 @@
         // クイズのデータ（問題を追加・変更したい場合はここを編集します）
         const quizData = [
             {
-                question: "日本で一番高い山はどれ？",
-                choices: ["北岳", "富士山", "奥穂高岳", "槍ヶ岳"],
+                question: "占い師についての説明として正しいものを選びなさい",
+                choices: ["相手が人狼か人狼でないかを教えられる", "占った相手の役職を知ることができる", "墓場占いを選択すれば欠けている役職が一つわかる", "怪盗に盗まれると占いができない"],
                 correctIndex: 1 // 0から数えるので、1は「富士山」
             },
             {
