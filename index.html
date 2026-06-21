@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,22 +12,25 @@
         .choice-btn {
             transition: all 0.2s ease-in-out;
         }
+
         .choice-btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
     </style>
 </head>
+
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 text-gray-800">
 
     <div class="max-w-lg w-full bg-white rounded-xl shadow-lg p-6 md:p-8">
-        
+
         <!-- クイズ画面 -->
         <div id="quiz-screen">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-blue-600">クイズ</h1>
-                <span id="question-counter" class="text-sm font-semibold bg-blue-100 text-blue-800 py-1 px-3 rounded-full">
-                    第 1 問 / 全 10 問
+                <span id="question-counter"
+                    class="text-sm font-semibold bg-blue-100 text-blue-800 py-1 px-3 rounded-full">
+                    第 1 問 / 全 6 問
                 </span>
             </div>
 
@@ -46,7 +50,9 @@
 
             <!-- 次へボタン -->
             <div class="text-right mt-4">
-                <button id="next-btn" class="hidden bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors" onclick="nextQuestion()">
+                <button id="next-btn"
+                    class="hidden bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+                    onclick="nextQuestion()">
                     次へ進む
                 </button>
             </div>
@@ -57,10 +63,13 @@
             <h2 class="text-3xl font-bold mb-4">結果発表</h2>
             <p class="text-xl mb-6">
                 あなたの正解数は... <br>
-                <span id="score-text" class="text-4xl font-extrabold text-blue-600">0</span> / <span id="total-text">0</span> 問！
+                <span id="score-text" class="text-4xl font-extrabold text-blue-600">0</span> / <span
+                    id="total-text">0</span> 問！
             </p>
             <div id="evaluation-message" class="text-gray-600 mb-8 font-medium"></div>
-            <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg w-full transition-colors" onclick="restartQuiz()">
+            <button
+                class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg w-full transition-colors"
+                onclick="restartQuiz()">
                 もう一度挑戦する
             </button>
         </div>
@@ -97,13 +106,13 @@
             },
             {
                 question: "怪盗が占い師を盗んだら占い能力は誰が持っている？",
-                choices:["占い師","怪盗","両方","両方が占いを行えるが占い師は出鱈目な結果が渡される"],
-                correctIndex:0
+                choices: ["占い師", "怪盗", "両方", "両方が占いを行えるが占い師は出鱈目な結果が渡される"],
+                correctIndex: 0
             },
             {
                 question: "人狼とてるてるの両吊りが発生したらどうなる？",
-                choices:["村人勝利","てるてる勝利","村人&てるてる勝利","勝利条件が対立するため全員負け"],
-                correctIndex:1
+                choices: ["村人勝利", "てるてる勝利", "村人&てるてる勝利", "勝利条件が対立するため全員負け"],
+                correctIndex: 1
             }
         ];
 
@@ -119,7 +128,7 @@
         const nextBtn = document.getElementById('next-btn');
         const questionCounter = document.getElementById('question-counter');
         const feedbackMessage = document.getElementById('feedback-message');
-        
+
         // 問題を表示する関数
         function loadQuestion() {
             // 状態のリセット
@@ -130,7 +139,7 @@
             choicesContainer.innerHTML = '';
 
             const currentQuiz = quizData[currentQuestionIndex];
-            
+
             // 問題文とカウンターの更新
             questionText.textContent = currentQuiz.question;
             questionCounter.textContent = `第 ${currentQuestionIndex + 1} 問 / 全 ${quizData.length} 問`;
@@ -153,28 +162,21 @@
             const currentQuiz = quizData[currentQuestionIndex];
             const buttons = choicesContainer.querySelectorAll('button');
 
+            selectedButton.classList.remove('bg-gray-50', 'hover:bg-gray-100', 'border-gray-200');
+            selectedButton.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
             // 正誤判定
             if (selectedIndex === currentQuiz.correctIndex) {
                 score++;
-                selectedButton.classList.remove('bg-gray-50', 'hover:bg-gray-100', 'border-gray-200');
-                selectedButton.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
-                feedbackMessage.textContent = "⭕ 正解！";
-                feedbackMessage.className = "text-center font-bold text-xl mb-4 text-green-600 block";
-            } else {
-                selectedButton.classList.remove('bg-gray-50', 'hover:bg-gray-100', 'border-gray-200');
-                selectedButton.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
-                feedbackMessage.textContent = "❌ 不正解...";
-                feedbackMessage.className = "text-center font-bold text-xl mb-4 text-red-600 block";
             }
 
             // 正解のボタンを強調表示し、すべてのボタンを無効化する
             buttons.forEach((btn, index) => {
                 btn.disabled = true;
                 btn.classList.add('cursor-not-allowed', 'opacity-80');
-                if (index === currentQuiz.correctIndex) {
-                    btn.classList.remove('bg-gray-50', 'border-gray-200');
-                    btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800', 'ring-2', 'ring-green-400');
-                }
+                // if (index === currentQuiz.correctIndex) {
+                //     btn.classList.remove('bg-gray-50', 'border-gray-200');
+                //     btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800', 'ring-2', 'ring-green-400');
+                // }
             });
 
             // 次へボタンを表示
@@ -184,7 +186,7 @@
         // 次の問題へ進む処理
         function nextQuestion() {
             currentQuestionIndex++;
-            
+
             if (currentQuestionIndex < quizData.length) {
                 loadQuestion();
             } else {
@@ -196,13 +198,13 @@
         function showResult() {
             quizScreen.classList.add('hidden');
             resultScreen.classList.remove('hidden');
-            
+
             document.getElementById('score-text').textContent = score;
             document.getElementById('total-text').textContent = quizData.length;
 
             const evaluation = document.getElementById('evaluation-message');
             const percentage = score / quizData.length;
-            
+
             if (percentage === 1) {
                 evaluation.textContent = "全問正解！素晴らしい知識です！";
             } else if (percentage >= 0.5) {
@@ -226,4 +228,5 @@
 
     </script>
 </body>
+
 </html>
